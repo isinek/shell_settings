@@ -1,27 +1,12 @@
-local lsp = require('lsp-zero')
-
-require('lspconfig').clangd.setup({})
-
-lsp.preset('recommended')
-
-lsp.ensure_installed({
-  'tsserver'
-})
-
-lsp.on_attach(function(client, bufnr)
-  lsp.default_keymaps({buffer = bufnr})
-end)
-
-lsp.setup()
-
--- vim.diagnostic.config({
---   virtual_text = true
--- })
-
--- Emmet settings
+local lspzero = require('lsp-zero').preset({'recomended'})
 local lspconfig = require('lspconfig')
 local configs = require('lspconfig/configs')
 local capabilities = vim.lsp.protocol.make_client_capabilities()
+
+-- clangd settings
+lspconfig.clangd.setup({})
+
+-- Emmet settings
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 lspconfig.emmet_ls.setup({
@@ -37,4 +22,26 @@ lspconfig.emmet_ls.setup({
     },
   }
 })
+
+-- lspzero-zero
+lspzero.on_attach(function(client, bufnr)
+  lspzero.default_keymaps({buffer = bufnr})
+end)
+
+lspzero.setup_servers({
+  'tsserver',
+  'clangd',
+  'rust_analyzer'
+})
+
+lspzero.setup()
+
+
+vim.diagnostic.config({
+  virtual_text = false
+})
+
+-- Show line diagnostics automatically in hover window
+vim.o.updatetime = 250
+vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
 
