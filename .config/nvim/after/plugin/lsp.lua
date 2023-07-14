@@ -45,3 +45,7 @@ vim.diagnostic.config({
 vim.o.updatetime = 250
 vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
 
+-- Set keymaps for next & previous error
+vim.keymap.set('n', '<leader>dn', vim.diagnostic.goto_next)
+vim.keymap.set('n', '<leader>dN', vim.diagnostic.goto_prev)
+
