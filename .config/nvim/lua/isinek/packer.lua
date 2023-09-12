@@ -34,13 +34,18 @@ return require('packer').startup(function(use)
 			require('trouble').setup({})
 		end
 	})
+	use({
+		'folke/todo-comments.nvim',
+		requires = 'nvim-lua/plenary.nvim',
+		opts = { }
+	})
 
 	use({
 		'nvim-lualine/lualine.nvim',
 		requires = { 'nvim-tree/nvim-web-devicons', opt = true }
 	})
 
-	use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
+	use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
 	use('nvim-treesitter/playground')
 	use('mbbill/undotree')
 	use('tpope/vim-fugitive')
