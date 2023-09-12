@@ -15,5 +15,4 @@ keymap.set('v', '<leader>y', '"+y')
 keymap.set('n', '<leader>Y', '"+Y')
 
 keymap.set('n', '<leader>r', ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
-keymap.set('n', '<leader>x', '<cmd>!chmod +x %<CR>', { silent = true })
 
