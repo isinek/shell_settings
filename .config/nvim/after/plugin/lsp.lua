@@ -29,9 +29,14 @@ lspzero.on_attach(function(client, bufnr)
 end)
 
 lspzero.setup_servers({
-  'tsserver',
-  'clangd',
-  'rust_analyzer'
+  'clangd'
+})
+
+lspzero.set_sign_icons({
+  error = '✘',
+  warn = '▲',
+  hint = '⚑',
+  info = '»'
 })
 
 lspzero.setup()

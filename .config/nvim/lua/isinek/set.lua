@@ -30,7 +30,7 @@ opt.colorcolumn = '80,120'
 
 opt.backspace = "indent,eol,start"
 
-opt.clipboard:append("unnamedplus")
+opt.clipboard = "unnamed,unnamedplus"
 
 opt.mouse = ""
 opt.mousemodel = ""
