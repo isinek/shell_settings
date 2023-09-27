@@ -1,6 +1,8 @@
 local keymap = vim.keymap
 
-keymap.set('n', '<leader>pe', vim.cmd.Ex)
+keymap.set('n', '<leader>e', vim.cmd.Explore)
+keymap.set('n', '<leader>he', vim.cmd.Hexplore)
+keymap.set('n', '<leader>ve', vim.cmd.Vexplore)
 
 keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
 keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
