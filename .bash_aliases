@@ -1,4 +1,7 @@
+alias ls='ls --color=auto'
 alias ll='ls -algh'
+alias less='less --RAW-CONTROL-CHARS'
+alias grep='grep --color=auto'
 
 alias ..='cd ../'
 alias ...='cd ../../'

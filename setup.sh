@@ -1,16 +1,20 @@
 #!/bin/bash
 
+SETUP_REV="v1.1"
+
 declare -A sources
 declare -A destinations
 
 modules=( "bash_aliases" "tmux" "vim" "nvim" )
 sources=(
+	["bashrc"]=.bashrc
 	["bash_aliases"]=.bash_aliases
 	["tmux"]=.tmux.conf
 	["vim"]=.vimrc
 	["nvim"]=.config/nvim
 )
 destinations=(
+	["bashrc"]=~/.bashrc
 	["bash_aliases"]=~/.bash_aliases
 	["tmux"]=~/.tmux.conf
 	["vim"]=~/.vimrc
@@ -106,7 +110,7 @@ fi
 mkdir -p ${tmp_dir}
 pushd ${tmp_dir} > /dev/null
 
-release_filename="v1.0.tar.gz"
+release_filename="${SETUP_REV}.tar.gz"
 wget https://github.com/isinek/shell_settings/archive/refs/tags/${release_filename}
 if [ ! -f "${release_filename}" ]
 then
