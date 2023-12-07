@@ -73,6 +73,8 @@ fi
 function __setprompt
 {
 	local LAST_COMMAND=$? # Must come first!
+	local use_icons=1
+	local first_block=1
 
 	# Define colors
 	local LIGHTGRAY="\033[0;37m"
@@ -93,23 +95,58 @@ function __setprompt
 	local LIGHTCYAN="\033[1;36m"
 	local NOCOLOR="\033[0m"
 
-	# Show error exit code if there is one
-	PS1="\[${LIGHTBLUE}\][ "
-	if [[ $LAST_COMMAND != 0 ]]; then
-		PS1+="\[${RED}\]${LAST_COMMAND}\[${LIGHTBLUE}\] | "
+	PS1="\[${LIGHTBLUE}\]"
+	if [ ${use_icons} -eq 0 ]; then
+		PS1+="["
 	else
-		PS1+="\[${GREEN}\]${LAST_COMMAND}\[${LIGHTBLUE}\] | "
+		PS1+=" "
 	fi
 
+	# Show error exit code if there is one
+	if [ ${LAST_COMMAND} -ne 0 ]; then
+		PS1+="\[${RED}\]"
+		if [ ${use_icons} -ne 0 ]; then
+			PS1+=" "
+		fi
+		PS1+=" ${LAST_COMMAND} \[${LIGHTBLUE}\]"
+		first_block=0
+	fi
+
+	# Add separator
+	if [ ${first_block} -eq 0 ] && [ ${use_icons} -eq 0 ]; then
+		PS1+="|"
+	fi
 	# Show last two directories of current path
-	PS1+="$( pwd | awk -F/ '{nlast = NF - 1; print $nlast"/"$NF}' )"
+	if [ ${use_icons} -ne 0 ]; then
+		PS1+=" "
+	fi
+	PS1+=" $( pwd | awk -F/ '{nlast = NF - 1; print $nlast"/"$NF}' ) "
+	first_block=0
 
 	# Show git branch if in git repo
 	git -C . rev-parse 2>/dev/null
-	if [ "$?" -eq 0 ]; then PS1+=" | \[${LIGHTMAGENTA}\]$( git branch --show-current )\[${LIGHTBLUE}\]"; fi
+	if [ "$?" -eq 0 ]; then
+		# Add separator
+		if [ ${first_block} -eq 0 ] && [ ${use_icons} -eq 0 ]; then
+			PS1+="|"
+		fi
+		PS1+="\[${LIGHTMAGENTA}\]"
+		# Show last two directories of current path
+		if [ ${use_icons} -ne 0 ]; then
+			PS1+=""
+		fi
+		PS1+=" $( git branch --show-current ) \[${LIGHTBLUE}\]"
+		first_block=0
+	fi
 
-	PS1+=" ]$ \[${NOCOLOR}\]"
+	if [ ${use_icons} -ne 0 ]; then
+		PS1+="  "
+	else
+		PS1+="]$ "
+	fi
+	PS1+="\[${NOCOLOR}\]"
 }
+
 if [ "$color_prompt" = yes ]; then
 	PROMPT_COMMAND='__setprompt'
 else
