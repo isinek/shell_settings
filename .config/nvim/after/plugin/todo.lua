@@ -8,5 +8,5 @@ vim.keymap.set('n', '<leader>tdn',	function()
 									end, { desc = 'Next todo comment' })
 vim.keymap.set('n', '<leader>tdN', function()
 										todo.jump_prev()
-									end, { desc = 'Next todo comment' })
+									end, { desc = 'Previous todo comment' })
 

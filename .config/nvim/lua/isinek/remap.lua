@@ -18,3 +18,7 @@ keymap.set('n', '<leader>Y', '"+Y')
 
 keymap.set('n', '<leader>r', ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
 
+-- Set keymaps for next & previous error
+keymap.set('n', '<leader>dn', vim.diagnostic.goto_next)
+keymap.set('n', '<leader>dN', vim.diagnostic.goto_prev)
+
