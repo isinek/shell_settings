@@ -18,20 +18,21 @@ opt.undodir = os.getenv('HOME') .. '/.vim/undodir'
 opt.undofile = true
 
 opt.termguicolors = true
-opt.signcolumn = "yes"
+opt.signcolumn = 'yes'
 
 opt.scrolloff = 8
-opt.signcolumn = 'yes'
 opt.isfname:append('@-@')
 
 opt.updatetime = 50
 
 opt.colorcolumn = '80,120'
 
-opt.backspace = "indent,eol,start"
+opt.backspace = 'indent,eol,start'
 
-opt.mouse = ""
-opt.mousemodel = ""
+opt.mouse = ''
+opt.mousemodel = ''
 
 vim.g.mapleader = ' '
+
+vim.cmd [["set list"]]
 
