@@ -1,28 +1,23 @@
 #!/bin/bash
 
-SETUP_REV="v1.1"
+SETUP_REV="v1.2"
 
-declare -A sources
-declare -A destinations
+modules=( "bash" "tmux" "vim" "nvim" )
 
-modules=( "bash_aliases" "tmux" "vim" "nvim" )
-sources=(
-	["bashrc"]=.bashrc
-	["bash_aliases"]=.bash_aliases
-	["tmux"]=.tmux.conf
-	["vim"]=.vimrc
-	["nvim"]=.config/nvim
-)
-destinations=(
-	["bashrc"]=~/.bashrc
-	["bash_aliases"]=~/.bash_aliases
-	["tmux"]=~/.tmux.conf
-	["vim"]=~/.vimrc
-	["nvim"]=~/.config/nvim
-)
+# Source files
+bash_sources=( .bash_profile .bashrc.user .bash_aliases )
+tmux_sources=( .tmux.conf )
+vim_sources=( .vimrc )
+nvim_sources=( .config/nvim )
+
+# File destinations
+bash_destinations=( $HOME/.bash_profile $HOME/.bashrc.user $HOME/.bash_aliases )
+tmux_destinations=( $HOME/.tmux.conf )
+vim_destinations=( $HOME/.vimrc )
+nvim_destinations=( $HOME/.config/nvim )
 
 setup_backup=1
-install=( ${modules[*]} )
+install=( "bash" "tmux" "nvim" )
 tmp_dir=tmp_shell_settings
 
 
@@ -71,24 +66,32 @@ setup_fail()
 install_module()
 {
 	module="$1"
-	source=${sources["${module}"]}
-	destination=${destinations["${module}"]}
+	sources="${module}_sources[*]"
+	sources=(${!sources})
+	destinations="${module}_destinations[*]"
+	destinations=(${!destinations})
 
-	if [ -n "${setup_backup}" ] && [ -f ${destination} ]
-	then
-		cp ${destination}{,.bak} || backup_fail "${destination}"
-		info "${destination} backed up to ${destination}.bak"
-	elif [ -n "${setup_backup}" ] && [ -d ${destination} ]
-	then
-		tar -cvzf ${destination}{_bak.tar.gz,} || backup_fail "${destination}"
-		info "${destination} backed up to ${destination}_bak.tar.gz"
-	elif [ ! -f ${source} ] && [ ! -d ${source} ]
-	then
-		error "Ooops, source '${source}' does not exist!"
-		return
-	fi
+	for i in $( seq 0 $(( ${#sources[@]} - 1 )) )
+	do
+		source=${sources[$i]}
+		destination=${destinations[$i]}
 
-	cp -rf ${source} ${destination} || setup_fail "${module}"
+		if [ -n "${setup_backup}" ] && [ -f ${destination} ]
+		then
+			cp ${destination}{,.bak} || backup_fail "${destination}"
+			info "${destination} backed up to ${destination}.bak"
+		elif [ -n "${setup_backup}" ] && [ -d ${destination} ]
+		then
+			tar -cvzf ${destination}{_bak.tar.gz,} || backup_fail "${destination}"
+			info "${destination} backed up to ${destination}_bak.tar.gz"
+		elif [ ! -f ${source} ] && [ ! -d ${source} ]
+		then
+			error "Ooops, source '${source}' does not exist!"
+			return
+		fi
+
+		cp -rf ${source} ${destination} || setup_fail "${module}"
+	done
 	info "Module ${module} is ready"
 }
 
@@ -117,7 +120,7 @@ then
 	download_fail
 fi
 tar -xvzf "${release_filename}"
-cd ./shell_settings*/
+cd ./shell_settings*
 
 for m in ${install[*]}
 do
