@@ -102,7 +102,7 @@ function __setprompt
 	fi
 
 	if [ ${use_icons} -ne 0 ]; then
-		PS1+="  "
+		PS1+=" "
 	else
 		PS1+="]$ "
 	fi
@@ -112,11 +112,15 @@ function __setprompt
 if [ "$color_prompt" = yes ]; then
 	PROMPT_COMMAND='__setprompt'
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+	PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
 unset color_prompt force_color_prompt
 
 # Set the default editor
 export EDITOR=nvim
 export VISUAL=nvim
+
+[ -f "$HOME/.bash_aliases" ] && source "$HOME/.bash_aliases"
+[ -f "$HOME/.bash_completion" ] && source "$HOME/.bash_completion"
+[ -f "$HOME/.fzf.bash" ] && source "$HOME/.fzf.bash"
 

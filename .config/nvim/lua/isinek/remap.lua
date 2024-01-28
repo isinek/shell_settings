@@ -18,6 +18,8 @@ keymap.set('n', '<leader>Y', '"+Y')
 
 keymap.set('n', '<leader>r', ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
 
+keymap.set('n', '<leader>cw', ":%s/[ \t\n]*$//g<CR>")
+
 keymap.set('n', '<leader>l', ":set invlist<CR>")
 
 -- Set keymaps for next & previous error

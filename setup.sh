@@ -1,17 +1,17 @@
 #!/bin/bash
 
-SETUP_REV="v1.2"
+SETUP_REV="v1.3"
 
 modules=( "bash" "tmux" "vim" "nvim" )
 
 # Source files
-bash_sources=( .bash_profile .bashrc.user .bash_aliases )
+bash_sources=( .bashrc.user .bash_aliases )
 tmux_sources=( .tmux.conf )
 vim_sources=( .vimrc )
 nvim_sources=( .config/nvim )
 
 # File destinations
-bash_destinations=( $HOME/.bash_profile $HOME/.bashrc.user $HOME/.bash_aliases )
+bash_destinations=( $HOME/.bashrc.user $HOME/.bash_aliases )
 tmux_destinations=( $HOME/.tmux.conf )
 vim_destinations=( $HOME/.vimrc )
 nvim_destinations=( $HOME/.config/nvim )
@@ -63,6 +63,14 @@ setup_fail()
 	exit 1
 }
 
+install_nerd_font()
+{
+	mkdir -p ~/.local/share/fonts
+	cd ~/.local/share/fonts && curl -fLO https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hasklig/Regular/HasklugNerdFontMono-Regular.otf
+
+	info "Nerd font installed"
+}
+
 install_module()
 {
 	module="$1"
@@ -88,11 +96,23 @@ install_module()
 		then
 			error "Ooops, source '${source}' does not exist!"
 			return
+		else
+			error "Unexpected error when installing ${module}!"
+			return
 		fi
 
 		cp -rf ${source} ${destination} || setup_fail "${module}"
 	done
 	info "Module ${module} is ready"
+
+	if [[ "bash" == "${module}" ]]
+	then
+		if [[ ! grep -qs "[ -f ~/.bashrc.user ] && source ~/.bashrc.user" ~/.bashrc ]]
+		then
+			(echo; echo "[ -f ~/.bashrc.user ] && source ~/.bashrc.user") >> ~/.bashrc
+		fi
+		install_nerd_font
+	fi
 }
 
 
@@ -124,8 +144,7 @@ cd ./shell_settings*
 
 for m in ${install[*]}
 do
-	echo "${m}"
-	if [[ ! " ${modules[@]} " =~ "${m}" ]]
+	if [[ ! " ${modules[@]} " =~ " ${m} " ]]
 	then
 		echo "Module ${m} not available!"
 		continue
