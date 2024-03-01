@@ -82,7 +82,7 @@ function __setprompt
 	if [ ${use_icons} -ne 0 ]; then
 		PS1+=" "
 	fi
-	PS1+=" $( pwd | awk -F/ '{nlast = NF - 1; print $nlast"/"$NF}' ) "
+	PS1+=" $( pwd | awk -F/ '(NF == 2){ print "/"$NF }; (NF == 3){ prev = NF - 1; print "/"$prev"/"$NF }; (NF > 3){ prev = NF - 1; print ".../"$prev"/"$NF }' ) "
 	first_block=0
 
 	# Show git branch if in git repo
