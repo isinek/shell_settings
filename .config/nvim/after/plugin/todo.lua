@@ -1,12 +1,17 @@
 local todo = require('todo-comments')
+local wk = require('which-key')
 
 todo.setup()
 
-vim.keymap.set('n', '<leader>td', '<cmd>TodoTelescope<CR>')
-vim.keymap.set('n', '<leader>tdn',	function()
-										todo.jump_next()
-									end, { desc = 'Next todo comment' })
-vim.keymap.set('n', '<leader>tdN', function()
-										todo.jump_prev()
-									end, { desc = 'Previous todo comment' })
+wk.register({
+	td = {
+		name = 'ToDo',
+		l = { '<cmd>TodoTelescope<CR>', 'ToDo List' },
+		n = { todo.jump_next, 'ToDo Next' },
+		N = { todo.jump_prev, 'ToDo previous' }
+	}
+}, {
+	prefix = '<leader>',
+	mode = 'n'
+})
 

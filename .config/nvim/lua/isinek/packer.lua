@@ -27,8 +27,8 @@ return require('packer').startup(function(use)
 	})
 
 	use({
-	'nvim-lualine/lualine.nvim',
-	requires = {
+		'nvim-lualine/lualine.nvim',
+		requires = {
 			{ 'nvim-tree/nvim-web-devicons' }
 		}
 	})
@@ -38,7 +38,7 @@ return require('packer').startup(function(use)
 	use('mbbill/undotree')
 	use('tpope/vim-fugitive')
 
-	use ({
+	use({
 		'VonHeikemen/lsp-zero.nvim',
 		branch = 'v3.x',
 		requires = {
@@ -53,12 +53,14 @@ return require('packer').startup(function(use)
 		}
 	})
 
-	use ({
+	use({
 		'folke/noice.nvim',
 		requires = {
 			{ 'MunifTanjim/nui.nvim' },
 			{ 'rcarriga/nvim-notify' }
 		}
 	})
+
+	use('folke/which-key.nvim')
 end)
 

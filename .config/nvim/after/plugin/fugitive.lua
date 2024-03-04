@@ -1,4 +1,13 @@
-vim.keymap.set('n', '<leader>gs', vim.cmd.Git);
-vim.keymap.set('n', '<leader>gb', ':Git blame<CR>');
-vim.keymap.set('n', '<leader>gd', ':Gdiffsplit HEAD^<CR>');
+local wk = require('which-key')
+
+wk.register({
+	g = {
+		name = 'Git',
+		b = { ':Git blame<CR>', 'Git Blame' },
+		d = { ':Gdiffsplit HEAD^<CR>', 'Git Diff' }
+	}
+}, {
+	prefix = '<leader>',
+	mode = 'n'
+})
 
