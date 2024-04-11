@@ -15,7 +15,7 @@ lspconfig.emmet_ls.setup({
 		html = {
 			options = {
 				-- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
-				["bem.enabled"] = true,
+				['bem.enabled'] = true,
 			},
 		},
 	}
@@ -24,11 +24,8 @@ lspconfig.emmet_ls.setup({
 -- OmniSharp settings
 lspconfig.omnisharp.setup({
 	capabilities = capabilities,
-	cmd = {	"omnisharp", "--languageserver" , "--hostPID", tostring(vim.fn.getpid()) }
+	cmd = {	'omnisharp', '--languageserver' , '--hostPID', tostring(vim.fn.getpid()) }
 })
-
--- nvim-web-devicon
-require('nvim-web-devicons').setup()
 
 -- lspzero-zero
 lspzero.on_attach(function(client, bufnr)

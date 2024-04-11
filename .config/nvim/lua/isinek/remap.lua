@@ -1,24 +1,4 @@
 local keymap = vim.keymap
-local wk = require('which-key')
-
-wk.register({
-	e = {
-		name = 'Explore',
-		e = { vim.cmd.Explore, 'Explore' },
-		h = { vim.cmd.Hexplore, 'Explore Horizontal' },
-		v = { vim.cmd.Vexplore, 'Explore Vertical' }
-	},
-	d = {
-		name = 'Diagnostic',
-		n = { vim.diagnostic.goto_next, 'Diagnostic Next' },
-		N = { vim.diagnostic.goto_prev, 'Diagnostic previous' }
-	},
-	l = { '<cmd>set invlist<CR>', 'toggle hidden characters' },
-	cw = { '<cmd>%s/[ \\t]\\+$//g<CR>', 'Clean Whitespaces' }
-}, {
-	prefix = '<leader>',
-	mode = 'n'
-})
 
 keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
 keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
