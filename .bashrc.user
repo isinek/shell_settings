@@ -36,7 +36,6 @@ function __setprompt
 {
 	local LAST_COMMAND=$? # Must come first!
 	local use_icons=1
-	local first_block=1
 
 	# Define colors
 	local LIGHTGRAY="\033[0;37m"
@@ -61,48 +60,62 @@ function __setprompt
 	if [ ${use_icons} -eq 0 ]; then
 		PS1+="["
 	else
-		PS1+=" "
+		PS1+=""
 	fi
+
+	# Add separator
+	if [ ${#PS1} -gt 18 ] && [ ${use_icons} -eq 0 ]; then
+		PS1+="|"
+	fi
+	# Show last two directories of current path
+	if [ ${use_icons} -ne 0 ]; then
+		PS1+="  "
+	fi
+	PS1+=" $( hostname ) "
 
 	# Show error exit code if there is one
 	if [ ${LAST_COMMAND} -ne 0 ]; then
+		# Add separator
+		if [ ${#PS1} -gt 18 ] && [ ${use_icons} -eq 0 ]; then
+			PS1+="|"
+		fi
+
 		PS1+="\[${RED}\]"
 		if [ ${use_icons} -ne 0 ]; then
-			PS1+=" "
+			PS1+="  "
 		fi
 		PS1+=" ${LAST_COMMAND} \[${LIGHTBLUE}\]"
 		first_block=0
 	fi
 
 	# Add separator
-	if [ ${first_block} -eq 0 ] && [ ${use_icons} -eq 0 ]; then
+	if [ ${#PS1} -gt 18 ] && [ ${use_icons} -eq 0 ]; then
 		PS1+="|"
 	fi
 	# Show last two directories of current path
 	if [ ${use_icons} -ne 0 ]; then
-		PS1+=" "
+		PS1+="  "
 	fi
 	PS1+=" $( pwd | awk -F/ '(NF == 2){ print "/"$NF }; (NF == 3){ prev = NF - 1; print "/"$prev"/"$NF }; (NF > 3){ prev = NF - 1; print ".../"$prev"/"$NF }' ) "
-	first_block=0
 
 	# Show git branch if in git repo
 	git -C . rev-parse 2>/dev/null
 	if [ "$?" -eq 0 ]; then
 		# Add separator
-		if [ ${first_block} -eq 0 ] && [ ${use_icons} -eq 0 ]; then
+		if [ ${#PS1} -gt 18 ] && [ ${use_icons} -eq 0 ]; then
 			PS1+="|"
 		fi
 		PS1+="\[${LIGHTMAGENTA}\]"
 		# Show last two directories of current path
 		if [ ${use_icons} -ne 0 ]; then
-			PS1+=""
+			PS1+=" "
 		fi
 		PS1+=" $( git branch --show-current ) \[${LIGHTBLUE}\]"
 		first_block=0
 	fi
 
 	if [ ${use_icons} -ne 0 ]; then
-		PS1+=" "
+		PS1+="   "
 	else
 		PS1+="]$ "
 	fi
@@ -112,15 +125,11 @@ function __setprompt
 if [ "$color_prompt" = yes ]; then
 	PROMPT_COMMAND='__setprompt'
 else
-	PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
 unset color_prompt force_color_prompt
 
 # Set the default editor
 export EDITOR=nvim
 export VISUAL=nvim
-
-[ -f "$HOME/.bash_aliases" ] && source "$HOME/.bash_aliases"
-[ -f "$HOME/.bash_completion" ] && source "$HOME/.bash_completion"
-[ -f "$HOME/.fzf.bash" ] && source "$HOME/.fzf.bash"
 
