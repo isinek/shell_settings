@@ -32,97 +32,83 @@ case "$TERM" in
 esac
 
 # Fancy prompt
-function __setprompt
-{
-	local LAST_COMMAND=$? # Must come first!
-	local use_icons=1
+function __color_block () {
+	local block="$1"
+	local fg="$2"
+	local bg="$3"
+	local term_bg="#2e3440"
 
-	# Define colors
-	local LIGHTGRAY="\033[0;37m"
-	local WHITE="\033[1;37m"
-	local BLACK="\033[0;30m"
-	local DARKGRAY="\033[1;30m"
-	local RED="\033[0;31m"
-	local LIGHTRED="\033[1;31m"
-	local GREEN="\033[0;32m"
-	local LIGHTGREEN="\033[1;32m"
-	local BROWN="\033[0;33m"
-	local YELLOW="\033[1;33m"
-	local BLUE="\033[0;34m"
-	local LIGHTBLUE="\033[1;34m"
-	local MAGENTA="\033[0;35m"
-	local LIGHTMAGENTA="\033[1;35m"
-	local CYAN="\033[0;36m"
-	local LIGHTCYAN="\033[1;36m"
-	local NOCOLOR="\033[0m"
+	fg="$(( 16#${fg:1:2} ));$(( 16#${fg:3:2} ));$(( 16#${fg:5:2} ))"
+	bg="$(( 16#${bg:1:2} ));$(( 16#${bg:3:2} ));$(( 16#${bg:5:2} ))"
+	term_bg="$(( 16#${term_bg:1:2} ));$(( 16#${term_bg:3:2} ));$(( 16#${term_bg:5:2} ))"
 
-	PS1="\[${LIGHTBLUE}\]"
-	if [ ${use_icons} -eq 0 ]; then
-		PS1+="["
-	else
-		PS1+=""
-	fi
+	local block_start="\e[38;2;${bg};48;2;${term_bg}m\e[m"
+	local block_end="\e[38;2;${bg};48;2;${term_bg}m\e[m"
+	block="\e[38;2;${fg};48;2;${bg}m${block}\e[m"
 
-	# Add separator
-	if [ ${#PS1} -gt 18 ] && [ ${use_icons} -eq 0 ]; then
-		PS1+="|"
-	fi
-	# Show last two directories of current path
-	if [ ${use_icons} -ne 0 ]; then
-		PS1+="  "
-	fi
-	PS1+=" $( hostname ) "
-
-	# Show error exit code if there is one
-	if [ ${LAST_COMMAND} -ne 0 ]; then
-		# Add separator
-		if [ ${#PS1} -gt 18 ] && [ ${use_icons} -eq 0 ]; then
-			PS1+="|"
-		fi
-
-		PS1+="\[${RED}\]"
-		if [ ${use_icons} -ne 0 ]; then
-			PS1+="  "
-		fi
-		PS1+=" ${LAST_COMMAND} \[${LIGHTBLUE}\]"
-		first_block=0
-	fi
-
-	# Add separator
-	if [ ${#PS1} -gt 18 ] && [ ${use_icons} -eq 0 ]; then
-		PS1+="|"
-	fi
-	# Show last two directories of current path
-	if [ ${use_icons} -ne 0 ]; then
-		PS1+="  "
-	fi
-	PS1+=" $( pwd | awk -F/ '(NF == 2){ print "/"$NF }; (NF == 3){ prev = NF - 1; print "/"$prev"/"$NF }; (NF > 3){ prev = NF - 1; print ".../"$prev"/"$NF }' ) "
-
-	# Show git branch if in git repo
-	git -C . rev-parse 2>/dev/null
-	if [ "$?" -eq 0 ]; then
-		# Add separator
-		if [ ${#PS1} -gt 18 ] && [ ${use_icons} -eq 0 ]; then
-			PS1+="|"
-		fi
-		PS1+="\[${LIGHTMAGENTA}\]"
-		# Show last two directories of current path
-		if [ ${use_icons} -ne 0 ]; then
-			PS1+=" "
-		fi
-		PS1+=" $( git branch --show-current ) \[${LIGHTBLUE}\]"
-		first_block=0
-	fi
-
-	if [ ${use_icons} -ne 0 ]; then
-		PS1+="   "
-	else
-		PS1+="]$ "
-	fi
-	PS1+="\[${NOCOLOR}\]"
+	echo -e "${block_start}${block}${block_end}"
 }
 
-if [ "$color_prompt" = yes ]; then
+function __setprompt () {
+	# Nord theme colors
+	# * Polar Night
+	#   * #2e3440
+	#   * #3b4252
+	#   * #434c5e
+	#   * #4c5662
+	# * Snow Storm
+	#   * #d8dee9
+	#   * #e5e9f0
+	#   * #eceff4
+	# * Frost
+	#   * #8fbcbb
+	#   * #88c0d0
+	#   * #81a1c1
+	#   * #5e81ac
+	# * Aurora
+	#   * #bf616a
+	#   * #d08770
+	#   * #ebcb8b
+	#   * #a3be8c
+	#   * #b48ead
+
+	local LAST_CMD_RESULT=$? # Must come first!
+	local use_icons=1
+	local line="\n"
+	local block=""
+	local fg="#2e3440"
+	local soft_divider=""
+
+	# Show last two directories of current path
+	block+="   ${soft_divider} $( hostname ) "
+	line+="$( __color_block "${block}" "${fg}" "#5e81ac" )"
+
+	# Show error exit code if there is one
+	if [ "${LAST_CMD_RESULT}" -gt 0 ]; then
+		# Show error exit code if there is one
+		block="   ${soft_divider} ${LAST_CMD_RESULT} "
+		line+="$( __color_block "${block}" "${fg}" "#bf616a" )"
+	fi
+
+	# Show last two directories of current path
+	block="$( pwd | awk -F/ '(NF == 2){ print "/"$NF }; (NF == 3){ prev = NF - 1; print "/"$prev"/"$NF }; (NF > 3){ prev = NF - 1; print ".../"$prev"/"$NF }' )"
+	block="   ${soft_divider} ${block} "
+	line+="$( __color_block "${block}" "${fg}" "#81a1c1" )"
+
+	# Show git branch if in git repo
+	git -C . rev-parse 2> /dev/null
+	if [ "$?" -eq 0 ]; then
+		block="$( git branch --show-current )"
+		block="  ${soft_divider} ${block} "
+		line+="$( __color_block "${block}" "${fg}" "#88c0d0" )"
+	fi
+
+	line+="\n  "
+
+	PS1="${line}"
+}
+
+if [[ "$color_prompt" == yes ]]; then
 	PROMPT_COMMAND='__setprompt'
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
