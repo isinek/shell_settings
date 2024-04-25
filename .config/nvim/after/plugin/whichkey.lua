@@ -41,7 +41,7 @@ wk.register({
 		name = 'Project',
 		f = { telescope_builtin.find_files, 'Project Find files' },
 		g = { telescope_builtin.live_grep, 'Project Grep' },
-		n = { '<cmd>Neotree<CR>', 'NeoTree' },
+		t = { '<cmd>Neotree<CR>', 'NeoTree' },
 	},
 	td = {
 		name = 'ToDo',
