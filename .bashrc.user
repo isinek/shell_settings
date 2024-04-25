@@ -133,3 +133,9 @@ unset color_prompt force_color_prompt
 export EDITOR=nvim
 export VISUAL=nvim
 
+# Brew
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+[ -r /home/linuxbrew/.linuxbrew/Cellar/fzf/*/shell/key-bindings.bash ] && . /home/linuxbrew/.linuxbrew/Cellar/fzf/*/shell/key-bindings.bash
+[ -r /home/linuxbrew/.linuxbrew/Cellar/fzf/*/shell/completion.bash ] && . /home/linuxbrew/.linuxbrew/Cellar/fzf/*/shell/completion.bash
+[ -r /home/linuxbrew/.linuxbrew/etc/profile.d/bash_completion.sh ] && . /home/linuxbrew/.linuxbrew/etc/profile.d/bash_completion.sh
