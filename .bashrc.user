@@ -116,8 +116,11 @@ fi
 unset color_prompt force_color_prompt
 
 # Set the default editor
-export EDITOR=nvim
-export VISUAL=nvim
+export EDITOR=hx
+export VISUAL=hx
+
+# Set up fzf key bindings and fuzzy completion
+eval "$(fzf --bash)"
 
 # Brew
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"

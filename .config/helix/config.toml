@@ -4,7 +4,14 @@ theme = "nord"
 line-number = "relative"
 shell = ["bash", "-c"]
 cursorline = true
-rulers = [80]
+rulers = [80,120]
+mouse = false
+auto-pairs = false
+color-modes = true
+true-color = true
+
+[editor.lsp]
+display-messages = true
 
 [editor.cursor-shape]
 insert = "bar"
@@ -12,5 +19,11 @@ normal = "block"
 select = "underline"
 
 [editor.whitespace.render]
-space = "all"
 tab = "all"
+
+[editor.indent-guides]
+render = true
+
+[keys.normal]
+"*" = ["move_prev_word_start", "move_next_word_end", "search_selection", "search_next"]
+"#" = ["move_prev_word_start", "move_next_word_end", "search_selection", "search_prev"]
