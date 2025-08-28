@@ -12,20 +12,20 @@ HISTFILESIZE=10000
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-iatest=$(expr index "$-" i)
+if echo "$-" | grep -q i; then
+	# Disable the bell
+	bind "set bell-style visible"
 
-# Disable the bell
-if [[ $iatest -gt 0 ]]; then bind "set bell-style visible"; fi
+	# Ignore case on auto-completion
+	# Note: bind used instead of sticking these in .inputrc
+	bind "set completion-ignore-case on"
 
-# Ignore case on auto-completion
-# Note: bind used instead of sticking these in .inputrc
-if [[ $iatest -gt 0 ]]; then bind "set completion-ignore-case on"; fi
-
-# Show auto-completion list automatically, without double tab
-if [[ $iatest -gt 0 ]]; then bind "set show-all-if-ambiguous On"; fi
+	# Show auto-completion list automatically, without double tab
+	bind "set show-all-if-ambiguous On"
+fi
 
 # force TERM
-export TERM="screen-256color"
+export TERM="xterm-256color"
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
@@ -115,16 +115,52 @@ else
 fi
 unset color_prompt force_color_prompt
 
+# Set vi mode in terminal
+set -o vi
+
 # Set the default editor
 export EDITOR=hx
 export VISUAL=hx
+# Set the default editor end
 
-# Set up fzf key bindings and fuzzy completion
+# HomeBrew
+BREW_PREFIX=$(brew --prefix)
+eval "$($BREW_PREFIX/bin/brew shellenv)"
+export PATH="$BREW_PREFIX/opt/grep/libexec/gnubin:$PATH"
+# HomeBrew end
+
+# coreutils
+export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
+# coreutils end
+
+# dotnet
+export PATH="$PATH:/Users/ivan.sinek/.dotnet"
+export DOTNET_ROOT="/Users/ivan.sinek/.dotnet"
+export PATH="$PATH:/Users/ivan.sinek/.dotnet/tools"
+export PATH="$PATH:/Users/ivan.sinek/omnisharp"
+# dotnet end
+
+# gawk
+export PATH="/opt/homebrew/opt/gawk/libexec/gnubin:$PATH"
+# gawk end
+
+# pnpm
+export PNPM_HOME="/Users/ivan.sinek/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# golangci-lint
+export PATH="/Users/ivan.sinek/github/golangci-lint/bin:$PATH"
+# golangci-lint end
+
+# Bash completion
+[ -r $BREW_PREFIX/etc/profile.d/bash_completion.sh ] && . $BREW_PREFIX/etc/profile.d/bash_completion.sh
 eval "$(fzf --bash)"
+# Bash completion end
 
-# Brew
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
-[ -r /home/linuxbrew/.linuxbrew/Cellar/fzf/*/shell/key-bindings.bash ] && . /home/linuxbrew/.linuxbrew/Cellar/fzf/*/shell/key-bindings.bash
-[ -r /home/linuxbrew/.linuxbrew/Cellar/fzf/*/shell/completion.bash ] && . /home/linuxbrew/.linuxbrew/Cellar/fzf/*/shell/completion.bash
-[ -r /home/linuxbrew/.linuxbrew/etc/profile.d/bash_completion.sh ] && . /home/linuxbrew/.linuxbrew/etc/profile.d/bash_completion.sh
+# carapace
+source <(carapace _carapace bash)
+# carapace end
