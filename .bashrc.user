@@ -24,104 +24,13 @@ if echo "$-" | grep -q i; then
 	bind "set show-all-if-ambiguous On"
 fi
 
-# force TERM
-export TERM="xterm-256color"
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
-esac
-
-# Fancy prompt
-function __color_block () {
-	local block="$1"
-	local fg="$2"
-	local bg="$3"
-	local term_bg="#2e3440"
-
-	fg="$(( 16#${fg:1:2} ));$(( 16#${fg:3:2} ));$(( 16#${fg:5:2} ))"
-	bg="$(( 16#${bg:1:2} ));$(( 16#${bg:3:2} ));$(( 16#${bg:5:2} ))"
-	term_bg="$(( 16#${term_bg:1:2} ));$(( 16#${term_bg:3:2} ));$(( 16#${term_bg:5:2} ))"
-
-	local block_start="\e[38;2;${bg};48;2;${term_bg}m\e[m"
-	local block_end="\e[38;2;${bg};48;2;${term_bg}m\e[m"
-	block="\e[38;2;${fg};48;2;${bg}m${block}\e[m"
-
-	echo -e "${block_start}${block}${block_end}"
-}
-
-function __setprompt () {
-	# Nord theme colors
-	# * Polar Night
-	#   * #2e3440
-	#   * #3b4252
-	#   * #434c5e
-	#   * #4c5662
-	# * Snow Storm
-	#   * #d8dee9
-	#   * #e5e9f0
-	#   * #eceff4
-	# * Frost
-	#   * #8fbcbb
-	#   * #88c0d0
-	#   * #81a1c1
-	#   * #5e81ac
-	# * Aurora
-	#   * #bf616a
-	#   * #d08770
-	#   * #ebcb8b
-	#   * #a3be8c
-	#   * #b48ead
-
-	local LAST_CMD_RESULT=$? # Must come first!
-	local use_icons=1
-	local line="\n"
-	local block=""
-	local fg="#2e3440"
-	local soft_divider=""
-
-	# Show last two directories of current path
-	block+="   ${soft_divider} $( hostname ) "
-	line+="$( __color_block "${block}" "${fg}" "#5e81ac" )"
-
-	# Show error exit code if there is one
-	if [ "${LAST_CMD_RESULT}" -gt 0 ]; then
-		# Show error exit code if there is one
-		block="   ${soft_divider} ${LAST_CMD_RESULT} "
-		line+="$( __color_block "${block}" "${fg}" "#bf616a" )"
-	fi
-
-	# Show last two directories of current path
-	block="$( pwd | awk -F/ '(NF == 2){ print "/"$NF }; (NF == 3){ prev = NF - 1; print "/"$prev"/"$NF }; (NF > 3){ prev = NF - 1; print ".../"$prev"/"$NF }' )"
-	block="   ${soft_divider} ${block} "
-	line+="$( __color_block "${block}" "${fg}" "#81a1c1" )"
-
-	# Show git branch if in git repo
-	git -C . rev-parse 2> /dev/null
-	if [ "$?" -eq 0 ]; then
-		block="$( git branch --show-current )"
-		block="  ${soft_divider} ${block} "
-		line+="$( __color_block "${block}" "${fg}" "#88c0d0" )"
-	fi
-
-	line+="\n  "
-
-	PS1="${line}"
-}
-
-if [[ "$color_prompt" == yes ]]; then
-	PROMPT_COMMAND='__setprompt'
-else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
-unset color_prompt force_color_prompt
-
-# Set vi mode in terminal
-set -o vi
-
 # Set the default editor
 export EDITOR=hx
 export VISUAL=hx
 # Set the default editor end
+
+# Set vi mode
+set -o vi
 
 # HomeBrew
 BREW_PREFIX=$(brew --prefix)
@@ -132,6 +41,10 @@ export PATH="$BREW_PREFIX/opt/grep/libexec/gnubin:$PATH"
 # coreutils
 export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
 # coreutils end
+
+# starship
+eval "$(starship init bash)"
+# starship end
 
 # dotnet
 export PATH="$PATH:/Users/ivan.sinek/.dotnet"
@@ -162,5 +75,9 @@ eval "$(fzf --bash)"
 # Bash completion end
 
 # carapace
-source <(carapace _carapace bash)
+eval "$(carapace _carapace bash)"
 # carapace end
+
+# glow
+eval "$(glow completion bash)"
+# glow end

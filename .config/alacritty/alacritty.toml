@@ -59,7 +59,7 @@ program = "/opt/homebrew/bin/bash"
 args = ["-l"]
 
 [font]
-size = 8.0
+size = 11.0
 
 [font.normal]
 family = "Hasklug Nerd Font Mono"

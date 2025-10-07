@@ -1,0 +1,171 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+[](fg:color_nord0)\
+$os\
+$username\
+[](bg:color_nord1 fg:color_nord0)\
+$directory\
+[](bg:color_nord2 fg:color_nord1)\
+$git_branch\
+$git_status\
+[](bg:color_nord3 fg:color_nord2)\
+$c\
+$cpp\
+$golang\
+$nodejs\
+$php\
+$python\
+[](bg:color_nord4 fg:color_nord3)\
+$time\
+[ ](fg:color_nord4)\
+$cmd_duration\
+$line_break\
+$character"""
+
+palette = 'nord'
+
+[palettes.nord]
+color_nord0 = "#5e81ac"
+color_nord1 = "#81a1c1"
+color_nord2 = "#88c0d0"
+color_nord3 = "#8fbcbb"
+color_nord4 = "#4c566a"
+color_bg = '#2e3440'
+color_fg = '#d8dee9'
+color_dim_fg = '#a5abb6'
+color_black = '#3b4252'
+color_red = '#bf616a'
+color_green = '#a3be8c'
+color_yellow = '#ebcb8b'
+color_blue = '#81a1c1'
+color_magenta = '#b48ead'
+color_cyan = '#88c0d0'
+color_white = '#e5e9f0'
+color_bright_black = '#4c566a'
+color_bright_red = '#bf616a'
+color_bright_green = '#a3be8c'
+color_bright_yellow = '#ebcb8b'
+color_bright_blue = '#81a1c1'
+color_bright_magenta = '#b48ead'
+color_bright_cyan = '#8fbcbb'
+color_bright_white = '#eceff4'
+color_dim_black = '#373e4d'
+color_dim_red = '#94545d'
+color_dim_green = '#809575'
+color_dim_yellow = '#b29e75'
+color_dim_blue = '#68809a'
+color_dim_magenta = '#8c738c'
+color_dim_cyan = '#6d96a5'
+color_dim_white = '#aeb3bb'
+
+[os]
+disabled = false
+style = "bg:color_nord0 fg:color_bg"
+
+[os.symbols]
+Windows = "󰍲"
+Ubuntu = "󰕈"
+SUSE = ""
+Raspbian = "󰐿"
+Mint = "󰣭"
+Macos = "󰀵"
+Manjaro = ""
+Linux = "󰌽"
+Gentoo = "󰣨"
+Fedora = "󰣛"
+Alpine = ""
+Amazon = ""
+Android = ""
+Arch = "󰣇"
+Artix = "󰣇"
+EndeavourOS = ""
+CentOS = ""
+Debian = "󰣚"
+Redhat = "󱄛"
+RedHatEnterprise = "󱄛"
+Pop = ""
+
+[username]
+show_always = true
+style_user = "bg:color_nord0 fg:color_bg"
+style_root = "bg:color_nord0 fg:color_bright_green"
+format = '[ $user ]($style)'
+
+[directory]
+style = "bg:color_nord1 fg:color_bg"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = "󰝚 "
+"Pictures" = " "
+"repos" = "󰲋 "
+"github" = "󰲋 "
+
+[git_branch]
+symbol = ""
+style = "bg:color_nord2 fg:color_bg"
+format = '[[ $symbol $branch ](bg:color_nord2 fg:color_bg)]($style)'
+
+[git_status]
+style = "bg:color_nord2 fg:color_bg"
+format = '[[($all_status$ahead_behind )](bg:color_nord2 fg:color_bg)]($style)'
+
+[nodejs]
+symbol = ""
+style = "bg:color_nord3"
+format = '[[ $symbol( $version) ](bg:color_nord3 fg:color_bg)]($style)'
+
+[c]
+symbol = " "
+style = "bg:color_nord3"
+format = '[[ $symbol( $version) ](bg:color_nord3 fg:color_bg)]($style)'
+
+[cpp]
+symbol = " "
+style = "bg:color_nord3"
+format = '[[ $symbol( $version) ](bg:color_nord3 fg:color_bg)]($style)'
+
+[golang]
+symbol = ""
+style = "bg:color_nord3"
+format = '[[ $symbol( $version) ](bg:color_nord3 fg:color_bg)]($style)'
+
+[php]
+symbol = ""
+style = "bg:color_nord3"
+format = '[[ $symbol( $version) ](bg:color_nord3 fg:color_bg)]($style)'
+
+[python]
+symbol = ""
+style = "bg:color_nord3"
+format = '[[ $symbol( $version) ](bg:color_nord3 fg:color_bg)]($style)'
+
+[time]
+disabled = false
+time_format = "%R"
+style = "bg:color_nord4"
+format = '[[  $time ](bg:color_nord4 fg:color_fg)]($style)'
+
+[cmd_duration]
+show_milliseconds = true
+format = " in $duration "
+disabled = false
+show_notifications = true
+min_time_to_notify = 45000
+
+[line_break]
+disabled = false
+
+[character]
+disabled = false
+success_symbol = '[](bold fg:color_green)'
+error_symbol = '[](bold fg:color_red)'
+vimcmd_symbol = '[](bold fg:color_green)'
+vimcmd_replace_one_symbol = '[](bold fg:color_magenta)'
+vimcmd_replace_symbol = '[](bold fg:color_magenta)'
+vimcmd_visual_symbol = '[](bold fg:color_yellow)'

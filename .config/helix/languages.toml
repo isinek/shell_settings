@@ -4,14 +4,12 @@
 
 [[language]]
 name = "css"
-formatter = { command = 'prettier', args = ["--parser", "css"] }
-language-servers = [
-    "vscode-css-language-server",
-    "tailwindcss-language-server"
-]
+formatter = { command = "prettier", args = ["--parser", "css"] }
+language-servers = ["vscode-css-language-server", "tailwindcss-language-server"]
 
 [[language]]
 name = "c-sharp"
+formatter = { command = "dotnet", args = ["format", "--include", "$path"] }
 language-servers = ["omnisharp"]
 
 [[language]]
@@ -25,75 +23,60 @@ language-servers = ["gopls"]
 
 [[language]]
 name = "html"
-formatter = { command = 'prettier', args = ["--parser", "html"] }
+file-types = ["html", "tmpl"]
+formatter = { command = "prettier", args = ["--parser", "html"] }
+auto-format = false
 language-servers = [
-    "vscode-html-language-server",
-    "tailwindcss-language-server"
+  "vscode-html-language-server",
+  "tailwindcss-language-server",
 ]
 
 [[language]]
 name = "javascript"
-formatter = { command = 'prettier', args = ["--parser", "typescript"] }
+formatter = { command = "prettier", args = ["--parser", "typescript"] }
 
 [[language]]
 name = "json"
-formatter = { command = 'prettier', args = ["--parser", "json"] }
+formatter = { command = "prettier", args = ["--parser", "json"] }
 language-servers = ["vscode-json-language-server"]
 
 [[language]]
 name = "jsx"
-formatter = { command = 'prettier', args = ["--parser", "typescript"] }
-language-servers = [
-    "typescript-language-server",
-    "tailwindcss-language-server"
-]
+formatter = { command = "prettier", args = ["--parser", "typescript"] }
+language-servers = ["typescript-language-server", "tailwindcss-language-server"]
 
 [[language]]
 name = "markdown"
-scope = "source.md"
-injection-regex = "md|markdown"
-file-types = [
-    "md",
-    "markdown",
-    "mdx",
-    "mkd",
-    "mkdn",
-    "mdwn",
-    "mdown",
-    "markdn",
-    "mdtxt",
-    "mdtext",
-    "workbook",
-    { glob = "PULLREQ_EDITMSG" }
-]
-roots = [".marksman.toml"]
-formatter = { command = "dprint", args = ["fmt", "--stdin", "md"]}
-language-servers = ["vscode-markdown-language-server"]
-indent = { tab-width = 2, unit = "  " }
-block-comment-tokens = { start = "<!--", end = "-->" }
+formatter = { command = "prettier", args = ["--parser", "markdown"] }
+language-servers = ["marksman"]
+
+[[language]]
+name = "toml"
+formatter = { command = "prettier", args = [
+  "--stdin-filepath",
+  "%{buffer_name}",
+  "--plugin",
+  "prettier-plugin-toml",
+] }
+language-servers = ["taplo"]
+auto-format = true
 
 [[language]]
 name = "typescript"
-formatter = { command = 'prettier', args = ["--parser", "typescript"] }
-language-servers = [
-    "typescript-language-server",
-    "tailwindcss-language-server"
-]
+formatter = { command = "prettier", args = ["--parser", "typescript"] }
+language-servers = ["typescript-language-server", "tailwindcss-language-server"]
 
 [[language]]
 name = "tsx"
-formatter = { command = 'prettier', args = ["--parser", "typescript"] }
-language-servers = [
-    "typescript-language-server",
-    "tailwindcss-language-server"
-]
+formatter = { command = "prettier", args = ["--parser", "typescript"] }
+language-servers = ["typescript-language-server", "tailwindcss-language-server"]
 
 [[language]]
 name = "yaml"
 scope = "source.yaml"
 injection-regex = "yml|yaml"
 file-types = ["yml", "yaml"]
-formatter = { command = 'prettier', args = ["--parser", "yaml"] }
+formatter = { command = "prettier", args = ["--parser", "yaml"] }
 comment-token = "#"
 indent = { tab-width = 2, unit = "  " }
 language-servers = ["yaml-language-server"]
@@ -118,32 +101,36 @@ hints = { "assignVariableType" = true, "compositeLiteralFields" = true, "composi
 
 [language-server.omnisharp]
 command = "OmniSharp"
-args = [ "--languageserver" ]
+args = ["--languageserver"]
 
 [language-server.tailwindcss-language-server]
 command = "tailwindcss-language-server"
-args = [ "--stdio" ]
+args = ["--stdio"]
+
+[language-server.taplo]
+command = "taplo"
+args = ["lsp", "stdio"]
 
 [language-server.typescript-language-server]
 command = "typescript-language-server"
-args = [ "--stdio" ]
+args = ["--stdio"]
 
 [language-server.vscode-css-language-server]
 command = "vscode-css-language-server"
-args = [ "--stdio" ]
+args = ["--stdio"]
 
 [language-server.vscode-html-language-server]
 command = "vscode-html-language-server"
-args = [ "--stdio" ]
+args = ["--stdio"]
 
 [language-server.vscode-json-language-server]
 command = "vscode-json-language-server"
-args = [ "--stdio" ]
+args = ["--stdio"]
 
 [language-server.vscode-markdown-language-server]
 command = "vscode-markdown-language-server"
-args = [ "--stdio" ]
+args = ["--stdio"]
 
 [language-server.yaml-language-server]
 command = "yaml-language-server"
-args = [ "--stdio" ]
+args = ["--stdio"]
