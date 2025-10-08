@@ -1,27 +1,12 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 format = """
-[](fg:color_nord0)\
-$os\
-$username\
-[](bg:color_nord1 fg:color_nord0)\
-$directory\
-[](bg:color_nord2 fg:color_nord1)\
-$git_branch\
-$git_status\
-[](bg:color_nord3 fg:color_nord2)\
-$c\
-$cpp\
-$golang\
-$nodejs\
-$php\
-$python\
-[](bg:color_nord4 fg:color_nord3)\
-$time\
-[ ](fg:color_nord4)\
-$cmd_duration\
-$line_break\
-$character"""
+[ ](bg:color_nord0)$os$username[](fg:color_nord0)\
+[](bg:color_nord1 fg:color_bg)$directory[](bg:color_bg fg:color_nord1)\
+[](bg:color_nord2 fg:color_bg)$git_branch$git_status[](bg:color_bg fg:color_nord2)\
+[](bg:color_nord3 fg:color_bg)$c$cpp$golang$nodejs$php$python[](bg:color_bg fg:color_nord3)\
+[](bg:color_nord4 fg:color_bg)$time[ ](fg:color_nord4)\
+$cmd_duration$line_break$character"""
 
 palette = 'nord'
 
@@ -31,7 +16,7 @@ color_nord1 = "#81a1c1"
 color_nord2 = "#88c0d0"
 color_nord3 = "#8fbcbb"
 color_nord4 = "#4c566a"
-color_bg = '#2e3440'
+color_bg = '#3b4252'
 color_fg = '#d8dee9'
 color_dim_fg = '#a5abb6'
 color_black = '#3b4252'
@@ -129,6 +114,12 @@ format = '[[ $symbol( $version) ](bg:color_nord3 fg:color_bg)]($style)'
 symbol = " "
 style = "bg:color_nord3"
 format = '[[ $symbol( $version) ](bg:color_nord3 fg:color_bg)]($style)'
+
+[dotnet]
+symbol = ''
+style = "bg:color_nord3"
+format = '[[ $symbol( $version) ](bg:color_nord3 fg:color_bg)]($style)'
+detect_extensions = ['csproj', 'fsproj', 'xproj', 'sln']
 
 [golang]
 symbol = ""

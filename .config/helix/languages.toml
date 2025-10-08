@@ -101,7 +101,7 @@ hints = { "assignVariableType" = true, "compositeLiteralFields" = true, "composi
 
 [language-server.omnisharp]
 command = "OmniSharp"
-args = ["--languageserver"]
+args = ["--languageserver", "--stdio"]
 
 [language-server.tailwindcss-language-server]
 command = "tailwindcss-language-server"
