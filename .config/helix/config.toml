@@ -10,6 +10,8 @@ auto-pairs = false
 color-modes = true
 true-color = true
 end-of-line-diagnostics = "hint"
+completion-replace = true
+trim-trailing-whitespace = true
 
 [editor.inline-diagnostics]
 cursor-line = "warning"
@@ -29,6 +31,32 @@ tab = "all"
 [editor.indent-guides]
 render = true
 
+[editor.statusline]
+left = [
+  "mode",
+  "spinner",
+  "version-control",
+  "spacer",
+  "separator",
+  "file-name",
+  "read-only-indicator",
+  "file-modification-indicator",
+]
+center = []
+right = [
+  "diagnostics",
+  "workspace-diagnostics",
+  "position",
+  "total-line-numbers",
+  "position-percentage",
+  "file-encoding",
+  "file-line-ending",
+  "file-type",
+  "register",
+  "selections",
+]
+separator = "│"
+
 [keys.normal]
 "*" = [
   "move_prev_word_start",
@@ -42,7 +70,15 @@ render = true
   "search_selection",
   "search_prev",
 ]
+"$" = "goto_line_end"
+"^" = "goto_first_nonwhitespace"
 C-g = [":new", ":insert-output lazygit", ":buffer-close!", ":redraw"]
 
-[keys.normal.space.C-c]
-"f" = ["file_picker_in_current_buffer_directory"]
+[keys.normal.space.f]
+f = "file_picker_in_current_directory"
+F = "file_picker"
+b = "file_picker_in_current_buffer_directory"
+"." = ":toggle-option file-picker.git-ignore"
+g = "global_search"
+e = "file_explorer"
+r = ":reload-all"

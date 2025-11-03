@@ -69,15 +69,11 @@ esac
 export PATH="/Users/ivan.sinek/github/golangci-lint/bin:$PATH"
 # golangci-lint end
 
+# 1password completion
+eval "$(op completion bash)"
+# 1password completion end
+
 # Bash completion
 [ -r $BREW_PREFIX/etc/profile.d/bash_completion.sh ] && . $BREW_PREFIX/etc/profile.d/bash_completion.sh
 eval "$(fzf --bash)"
 # Bash completion end
-
-# carapace
-eval "$(carapace _carapace bash)"
-# carapace end
-
-# glow
-eval "$(glow completion bash)"
-# glow end

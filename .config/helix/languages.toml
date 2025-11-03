@@ -5,12 +5,16 @@
 [[language]]
 name = "css"
 formatter = { command = "prettier", args = ["--parser", "css"] }
-language-servers = ["vscode-css-language-server", "tailwindcss-language-server"]
+language-servers = [
+  "vscode-css-language-server",
+  "tailwindcss-language-server",
+  "harper",
+]
 
 [[language]]
 name = "c-sharp"
 formatter = { command = "dotnet", args = ["format", "--include", "$path"] }
-language-servers = ["omnisharp"]
+language-servers = ["omnisharp", "harper"]
 
 [[language]]
 name = "go"
@@ -19,7 +23,7 @@ injection-regex = "go"
 file-types = ["go"]
 roots = ["go.mod"]
 auto-format = true
-language-servers = ["gopls"]
+language-servers = ["gopls", "harper"]
 
 [[language]]
 name = "html"
@@ -29,6 +33,7 @@ auto-format = false
 language-servers = [
   "vscode-html-language-server",
   "tailwindcss-language-server",
+  "harper",
 ]
 
 [[language]]
@@ -38,17 +43,21 @@ formatter = { command = "prettier", args = ["--parser", "typescript"] }
 [[language]]
 name = "json"
 formatter = { command = "prettier", args = ["--parser", "json"] }
-language-servers = ["vscode-json-language-server"]
+language-servers = ["vscode-json-language-server", "harper"]
 
 [[language]]
 name = "jsx"
 formatter = { command = "prettier", args = ["--parser", "typescript"] }
-language-servers = ["typescript-language-server", "tailwindcss-language-server"]
+language-servers = [
+  "typescript-language-server",
+  "tailwindcss-language-server",
+  "harper",
+]
 
 [[language]]
 name = "markdown"
 formatter = { command = "prettier", args = ["--parser", "markdown"] }
-language-servers = ["marksman"]
+language-servers = ["marksman", "harper"]
 
 [[language]]
 name = "toml"
@@ -58,18 +67,26 @@ formatter = { command = "prettier", args = [
   "--plugin",
   "prettier-plugin-toml",
 ] }
-language-servers = ["taplo"]
+language-servers = ["taplo", "harper"]
 auto-format = true
 
 [[language]]
 name = "typescript"
 formatter = { command = "prettier", args = ["--parser", "typescript"] }
-language-servers = ["typescript-language-server", "tailwindcss-language-server"]
+language-servers = [
+  "typescript-language-server",
+  "tailwindcss-language-server",
+  "harper",
+]
 
 [[language]]
 name = "tsx"
 formatter = { command = "prettier", args = ["--parser", "typescript"] }
-language-servers = ["typescript-language-server", "tailwindcss-language-server"]
+language-servers = [
+  "typescript-language-server",
+  "tailwindcss-language-server",
+  "harper",
+]
 
 [[language]]
 name = "yaml"
@@ -77,9 +94,10 @@ scope = "source.yaml"
 injection-regex = "yml|yaml"
 file-types = ["yml", "yaml"]
 formatter = { command = "prettier", args = ["--parser", "yaml"] }
+auto-format = true
 comment-token = "#"
 indent = { tab-width = 2, unit = "  " }
-language-servers = ["yaml-language-server"]
+language-servers = ["yaml-language-server", "harper"]
 
 ####################
 # Language Servers #
@@ -98,6 +116,10 @@ analyses = { "nilness" = true, "unusedparams" = true, "unusedwrite" = true, "use
 usePlaceholders = true
 completeUnimported = true
 hints = { "assignVariableType" = true, "compositeLiteralFields" = true, "compositeLiteralTypes" = true, "constantValues" = true, "functionTypeParameters" = true, "parameterNames" = true, "rangeVariableTypes" = true }
+
+[language-server.harper]
+command = "harper-ls"
+args = ["--stdio"]
 
 [language-server.omnisharp]
 command = "OmniSharp"
