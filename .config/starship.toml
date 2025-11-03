@@ -146,7 +146,7 @@ format = '[[  $time ](bg:color_nord4 fg:color_fg)]($style)'
 show_milliseconds = true
 format = " in $duration "
 disabled = false
-show_notifications = true
+show_notifications = false
 min_time_to_notify = 45000
 
 [line_break]
