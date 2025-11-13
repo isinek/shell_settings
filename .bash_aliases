@@ -1,11 +1,10 @@
 alias ls='ls --color=auto'
-alias ll='ls -algh'
+alias ll='ls -alh'
 alias less='less --RAW-CONTROL-CHARS'
 alias grep='grep --color=auto'
 
 alias ..='cd ../'
 alias ...='cd ../../'
-alias cdl='cd $1 && ll'
 
 alias mkcd='mkcd_alias() { mkdir -p "$1"; cd "$1"; }; mkcd_alias'
 

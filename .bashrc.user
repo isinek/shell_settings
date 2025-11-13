@@ -65,15 +65,14 @@ case ":$PATH:" in
 esac
 # pnpm end
 
-# golangci-lint
-export PATH="/Users/ivan.sinek/github/golangci-lint/bin:$PATH"
-# golangci-lint end
-
 # 1password completion
 eval "$(op completion bash)"
 # 1password completion end
 
+# fzf
+eval "$(fzf --bash)"
+# fzf end
+
 # Bash completion
 [ -r $BREW_PREFIX/etc/profile.d/bash_completion.sh ] && . $BREW_PREFIX/etc/profile.d/bash_completion.sh
-eval "$(fzf --bash)"
 # Bash completion end
