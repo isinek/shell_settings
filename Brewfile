@@ -1,4 +1,3 @@
-tap "mongodb/brew"
 tap "nikitabobko/tap"
 tap "omnisharp/omnisharp-roslyn"
 tap "oven-sh/bun"
@@ -60,7 +59,8 @@ brew "vscode-langservers-extracted"
 brew "yaml-language-server"
 brew "omnisharp/omnisharp-roslyn/omnisharp"
 
-# formatters
+# formatters & linters
+brew "golangci-lint"
 brew "prettier"
 
 # work
@@ -71,11 +71,12 @@ brew "tailscale"
 cask "1password"
 cask "1password-cli"
 cask "aerospace"
-# cask "alacritty"
 cask "dbeaver-community"
 cask "dotnet-sdk"
 cask "github"
 cask "ghostty"
+cask "google-chrome"
 cask "postman"
 cask "slack"
 cask "temurin"
+# cask "zoom"
