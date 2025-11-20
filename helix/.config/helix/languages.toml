@@ -60,13 +60,26 @@ formatter = { command = "prettier", args = ["--parser", "markdown"] }
 language-servers = ["marksman", "harper"]
 
 [[language]]
-name = "toml"
+name = "sql"
+file-types = ["sql"]
 formatter = { command = "prettier", args = [
+  "--plugin",
+  "prettier-plugin-sql",
   "--stdin-filepath",
   "%{buffer_name}",
+] }
+indent = { tab-width = 2, unit = "  " }
+language-servers = ["postgres-language-server"]
+auto-format = true
+
+[[language]]
+formatter = { command = "prettier", args = [
   "--plugin",
   "prettier-plugin-toml",
+  "--stdin-filepath",
+  "%{buffer_name}",
 ] }
+name = "toml"
 language-servers = ["taplo", "harper"]
 auto-format = true
 
@@ -124,6 +137,10 @@ args = ["--stdio"]
 [language-server.omnisharp]
 command = "OmniSharp"
 args = ["--languageserver", "--stdio"]
+
+[language-server.postgres-language-server]
+command = "postgres-language-server"
+args = ["lsp-proxy"]
 
 [language-server.tailwindcss-language-server]
 command = "tailwindcss-language-server"
