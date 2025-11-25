@@ -1,0 +1,102 @@
+# load aliases
+[ -r ~/.bash_aliases ] && . ~/.bash_aliases
+
+# Don't put duplicate lines in the history and do not add lines that start with a space
+export HISTCONTROL=erasedups:ignoredups:ignorespace
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=100000
+HISTFILESIZE=100000
+
+# Save and reload the history after each command finishes
+export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+if echo "$-" | grep -q i; then
+  # Disable the bell
+  bind "set bell-style visible"
+
+  # Ignore case on auto-completion
+  # Note: bind used instead of sticking these in .inputrc
+  bind "set completion-ignore-case on"
+
+  # Show auto-completion list automatically, without double tab
+  bind "set show-all-if-ambiguous On"
+fi
+
+# Set the default editor
+if ! command -v hx >/dev/null 2>&1; then
+  export EDITOR=hx
+  export VISUAL=hx
+fi
+# Set the default editor end
+
+# Set vi mode
+set -o vi
+
+# HomeBrew
+if ! command -v brew >/dev/null 2>&1; then
+  BREW_PREFIX=$(brew --prefix)
+  eval "$($BREW_PREFIX/bin/brew shellenv)"
+  export PATH="$BREW_PREFIX/opt/grep/libexec/gnubin:$PATH"
+fi
+# HomeBrew end
+
+# coreutils
+if ! command -v brew >/dev/null 2>&1; then
+  export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
+fi
+# coreutils end
+
+# starship
+if ! command -v starship >/dev/null 2>&1; then
+  eval "$(starship init bash)"
+fi
+# starship end
+
+# dotnet
+if ! command -v dotnet >/dev/null 2>&1; then
+  export PATH="$PATH:/Users/ivan.sinek/.dotnet"
+  export DOTNET_ROOT="/Users/ivan.sinek/.dotnet"
+  export PATH="$PATH:/Users/ivan.sinek/.dotnet/tools"
+  export PATH="$PATH:/Users/ivan.sinek/omnisharp"
+fi
+# dotnet end
+
+# gawk
+if ! command -v gawk >/dev/null 2>&1; then
+  export PATH="$(brew --prefix gawk)/libexec/gnubin:$PATH"
+fi
+# gawk end
+
+# pnpm
+if ! command -v pnpm >/dev/null 2>&1; then
+  export PNPM_HOME="/Users/ivan.sinek/Library/pnpm"
+  case ":$PATH:" in
+    *":$PNPM_HOME:"*) ;;
+    *) export PATH="$PNPM_HOME:$PATH" ;;
+  esac
+fi
+# pnpm end
+
+# 1password completion
+if ! command -v op >/dev/null 2>&1; then
+  eval "$(op completion bash)"
+fi
+# 1password completion end
+
+# fzf
+if ! command -v fzf >/dev/null 2>&1; then
+  eval "$(fzf --bash)"
+fi
+# fzf end
+
+# Bash completion
+[ -r $BREW_PREFIX/etc/profile.d/bash_completion.sh ] && . $BREW_PREFIX/etc/profile.d/bash_completion.sh
+# Bash completion end
