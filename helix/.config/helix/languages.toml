@@ -5,16 +5,15 @@
 [[language]]
 name = "css"
 formatter = { command = "prettier", args = ["--parser", "css"] }
-language-servers = [
-  "vscode-css-language-server",
-  "tailwindcss-language-server",
-  "harper",
-]
+language-servers = ["vscode-css-language-server", "tailwindcss-language-server"]
 
 [[language]]
 name = "c-sharp"
-formatter = { command = "dotnet", args = ["format", "--include", "$path"] }
-language-servers = ["omnisharp", "harper"]
+scope = "source.csharp"
+roots = ["*.csproj", "*.sln"]
+file-types = ["cs"]
+formatter = { command = "dotnet", args = ["format"] }
+language-servers = ["omnisharp"]
 
 [[language]]
 name = "go"
@@ -33,7 +32,6 @@ auto-format = false
 language-servers = [
   "vscode-html-language-server",
   "tailwindcss-language-server",
-  "harper",
 ]
 
 [[language]]
@@ -43,16 +41,12 @@ formatter = { command = "prettier", args = ["--parser", "typescript"] }
 [[language]]
 name = "json"
 formatter = { command = "prettier", args = ["--parser", "json"] }
-language-servers = ["vscode-json-language-server", "harper"]
+language-servers = ["vscode-json-language-server"]
 
 [[language]]
 name = "jsx"
 formatter = { command = "prettier", args = ["--parser", "typescript"] }
-language-servers = [
-  "typescript-language-server",
-  "tailwindcss-language-server",
-  "harper",
-]
+language-servers = ["typescript-language-server", "tailwindcss-language-server"]
 
 [[language]]
 name = "markdown"
@@ -73,33 +67,25 @@ language-servers = ["postgres-language-server"]
 auto-format = true
 
 [[language]]
+name = "toml"
 formatter = { command = "prettier", args = [
   "--plugin",
   "prettier-plugin-toml",
   "--stdin-filepath",
   "%{buffer_name}",
 ] }
-name = "toml"
-language-servers = ["taplo", "harper"]
+language-servers = ["taplo"]
 auto-format = true
 
 [[language]]
 name = "typescript"
 formatter = { command = "prettier", args = ["--parser", "typescript"] }
-language-servers = [
-  "typescript-language-server",
-  "tailwindcss-language-server",
-  "harper",
-]
+language-servers = ["typescript-language-server", "tailwindcss-language-server"]
 
 [[language]]
 name = "tsx"
 formatter = { command = "prettier", args = ["--parser", "typescript"] }
-language-servers = [
-  "typescript-language-server",
-  "tailwindcss-language-server",
-  "harper",
-]
+language-servers = ["typescript-language-server", "tailwindcss-language-server"]
 
 [[language]]
 name = "yaml"
@@ -110,7 +96,7 @@ formatter = { command = "prettier", args = ["--parser", "yaml"] }
 auto-format = true
 comment-token = "#"
 indent = { tab-width = 2, unit = "  " }
-language-servers = ["yaml-language-server", "harper"]
+language-servers = ["yaml-language-server"]
 
 ####################
 # Language Servers #
