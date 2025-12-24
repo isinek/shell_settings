@@ -64,20 +64,22 @@ brew "omnisharp/omnisharp-roslyn/omnisharp"
 brew "golangci-lint"
 brew "prettier"
 
-# work
-brew "asdf"
-brew "tailscale"
+if OS.mac?
+  # work
+  brew "asdf"
+  brew "tailscale"
 
-# casks
-cask "1password"
-cask "1password-cli"
-cask "aerospace"
-cask "dbeaver-community"
-cask "dotnet-sdk"
-cask "github"
-cask "ghostty"
-cask "google-chrome"
-cask "postman"
-cask "slack"
-cask "temurin"
-# cask "zoom"
+  # casks
+  cask "1password"
+  cask "1password-cli"
+  cask "aerospace"
+  cask "dbeaver-community"
+  cask "dotnet-sdk"
+  cask "github"
+  cask "ghostty"
+  cask "google-chrome"
+  cask "postman"
+  cask "slack"
+  cask "temurin"
+  cask "zoom"
+end
